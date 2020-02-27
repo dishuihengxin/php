@@ -89,7 +89,7 @@ RUN set -eux; \
 	chown -R --no-dereference "$APACHE_RUN_USER:$APACHE_RUN_GROUP" "$APACHE_LOG_DIR"
 
 # Apache + PHP requires preforking Apache for best results
-RUN a2dismod mpm_event && a2enmod mpm_prefork
+RUN a2dismod mpm_event && a2enmod mpm_prefork && a2enmod rewrite
 
 # PHP files should be handled by PHP, and should be preferred over any other file type
 RUN { \
@@ -232,6 +232,7 @@ RUN set -eux; \
 		--with-sqlite3=/usr \
 		\
 		--with-curl \
+		--with-mysqli \
 		--with-libedit \
 		--with-openssl \
 		--with-zlib \
